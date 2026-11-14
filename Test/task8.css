@@ -1,0 +1,73 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+.page {
+  background-color: #f3f4f6;
+  width: 400px;
+  padding: 10px;
+}
+
+.title {
+  text-align: center;
+}
+
+.report {
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.student {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.avatar {
+  font-size: 40px;
+  border: 1px solid gray;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+}
+
+.name {
+  color: blue;
+  font-weight: bold;
+}
+
+.form {
+  background-color: #dbeafe;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.form h4 {
+  color: darkblue;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input, select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid lightblue;
+  border-radius: 5px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  background-color: blue;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}

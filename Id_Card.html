@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Id Card</title>
+<style>
+  body{
+    font-family: sans-serif;
+  }
+  #header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+  #nav{
+    display: flex;
+    justify-content: space-around;
+    width: 400px;
+  }
+  #main{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .photo{
+
+    width: 300px;
+    height: 350px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  .photo img{
+    width: 100%;
+    height: 100%;
+  }
+  .intro{
+    text-align: center;
+  }
+  .name{
+    color: red;
+  }
+  #social{
+    display: flex;
+    justify-content: center;
+  }
+  .icon{
+    border: 3px solid;
+    border-color: black;
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  .icon img{
+    width: 100%;
+    height: 100%;
+
+  }
+  @media (max-width: 400px) {
+    .photo{display: none;}
+ 
+    }
+</style>
+</head>
+<body>
+<div id="header">
+  <h1>Cristiano Ronaldo</h1>
+  <div id="nav">
+    <h3>Home</h3>
+    <h3>Portfolio</h3>
+    <h3>Contact</h3>
+  </div>
+</div>
+<div id="main">
+  <div class="photo">
+    <img src="https://img.a.transfermarkt.technology/portrait/big/8198-1748102259.jpg?lm=4711" alt="photo">
+  </div>
+  <div class="intro">
+    <h1>Hello!😘</h1>
+    <h2>I'm <span class="name">Cristiano Ronaldo</span></h2>
+    <h2>A Footballer From</h2>
+    <h2>Madeira, Portugal</h2>
+    <div id="social">
+      <div class="icon">
+        <a target="_blank" href="https://www.instagram.com/cristiano/"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyvXmspdFe2uZOrbKEHa1hFtznR0WN7AXi4D7C_ZPlxA&s" alt="IG"></a>
+      </div>
+      <div class="icon">
+        <a target="_blank" href="https://x.com/Cristiano"><img src="https://img.magnific.com/free-vector/twitter-app-new-logo-x-black-background_1017-45425.jpg?semt=ais_hybrid&w=740&q=80" alt="X"></a>
+      </div>
+      <div class="icon">
+        <a target="_blank" href="https://www.facebook.com/cristianoronaldo"><img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Facebook_logo_%28square%29.png?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original" alt="Facebook"></a>
+      </div>
+      <div class="icon">
+        <a target="_blank" href="https://www.youtube.com/@cristiano"><img src="https://www.pixartprinting.co.uk/blog/wp-content/uploads/2025/05/Youtube_logo.jpg" alt="Youtube"></a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

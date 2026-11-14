@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { font-family: Arial, sans-serif; background: #f7f7f7; text-align: center; }
+
+  .card {
+    width: 200px;
+    height: 250px;
+    padding: 20px;
+    border: 2px solid black;
+    margin: 15px;
+    box-sizing: border-box;
+    display: inline-block;
+    background: white;
+  }
+
+  .product-name { font-size: 18px; font-weight: bold; }
+  .price { font-size: 16px; font-weight: bold; }
+  button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    background: #333;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  button:hover { background: #555; }
+
+  .headphones { border-color: #2563eb; }
+  .headphones .price { color: #2563eb; }
+
+  .mouse { border-style: dashed; border-color: #16a34a; }
+  .mouse .price { color: #16a34a; }
+
+  .keyboard { border-width: 4px; border-color: #ea580c; }
+  .keyboard .price { color: #ea580c; }
+</style>
+</head>
+<body>
+
+  <h1>My Shop</h1>
+
+  <div class="card headphones">
+    <p class="product-name">Headphones</p>
+    <p>Wireless headphones with clear sound.</p>
+    <p class="price">$25</p>
+    <button>Buy Now</button>
+  </div>
+
+  <div class="card mouse">
+    <p class="product-name">Gaming Mouse</p>
+    <p>Fast and comfortable mouse for gaming.</p>
+    <p class="price">$20</p>
+    <button>Buy Now</button>
+  </div>
+
+  <div class="card keyboard">
+    <p class="product-name">Keyboard</p>
+    <p>Simple keyboard for gaming and typing.</p>
+    <p class="price">$30</p>
+    <button>Buy Now</button>
+  </div>
+
+</body>
+</html>

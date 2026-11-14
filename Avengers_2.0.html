@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The MCU Timeline</title>
+<style>
+
+  :root {
+    --marvel-red: #ed1d24;
+    --marvel-red-bright: #ff4b4f;
+    --bg: #0a0a0c;
+    --card-bg: #16161a;
+    --gold: #ffc94d;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(237,29,36,0.10), transparent 40%),
+      radial-gradient(circle at 80% 0%, rgba(237,29,36,0.07), transparent 35%),
+      var(--bg);
+    color: white;
+    min-height: 100vh;
+  }
+
+  header {
+    text-align: center;
+    padding: 60px 20px 20px;
+  }
+
+  .eyebrow {
+    color: var(--marvel-red);
+    font-size: 13px;
+    letter-spacing: 4px;
+    font-weight: bold;
+  }
+
+  h1 {
+    font-size: clamp(28px, 5vw, 46px);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 10px 0 0;
+    background: linear-gradient(180deg, #fff, #aaa);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .subtitle { color: #888; margin-top: 12px; font-size: 14px; }
+
+  .divider {
+    width: 80px; height: 3px; background: var(--marvel-red);
+    margin: 24px auto 0; border: none; border-radius: 2px;
+  }
+
+  /* --- search + filters --- */
+  .controls {
+    max-width: 900px;
+    margin: 30px auto 10px;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  #search {
+    width: 100%;
+    max-width: 340px;
+    padding: 10px 16px;
+    border-radius: 20px;
+    border: 1px solid #333;
+    background: #141416;
+    color: white;
+    font-size: 13px;
+    outline: none;
+  }
+  #search:focus { border-color: var(--marvel-red); }
+
+  .phase-filters {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .phase-filters button {
+    background: transparent;
+    border: 1px solid #333;
+    color: #ccc;
+    padding: 7px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    transition: 0.2s;
+  }
+
+  .phase-filters button:hover,
+  .phase-filters button.active {
+    background: var(--marvel-red);
+    border-color: var(--marvel-red);
+    color: white;
+  }
+
+  /* --- phase sections --- */
+  .phase-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px;
+  }
+
+  .phase-heading {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 60px 0 24px;
+  }
+
+  .phase-heading h2 {
+    font-size: 20px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    margin: 0;
+    color: var(--marvel-red-bright);
+  }
+
+  .phase-heading .line {
+    height: 1px;
+    flex-grow: 1;
+    background: linear-gradient(90deg, #333, transparent);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 24px;
+  }
+
+  .card {
+    position: relative;
+    min-height: 300px;
+    padding: 20px;
+    border: 1px solid #262626;
+    border-radius: 14px;
+    background: linear-gradient(160deg, var(--card-bg), #0e0e10);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 100% 0%, rgba(237,29,36,0.15), transparent 55%);
+    pointer-events: none;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: var(--marvel-red);
+    box-shadow: 0 16px 30px rgba(237,29,36,0.22);
+  }
+
+  .poster {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--marvel-red), #7a0a0d);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .upcoming .poster { background: linear-gradient(135deg, #555, #222); }
+
+  .title { font-size: 15px; font-weight: bold; line-height: 1.3; margin: 0 0 4px; }
+  .year { font-size: 12px; color: #888; margin: 0 0 8px; }
+  .desc { font-size: 12.5px; color: #bbb; line-height: 1.4; margin: 0 0 12px; flex-grow: 1; }
+  .rating { font-size: 12.5px; color: var(--gold); margin: 0 0 12px; font-weight: bold; }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    color: #999;
+    border: 1px solid #333;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin: 0 0 12px;
+  }
+
+  a.watch-btn {
+    display: inline-block;
+    text-align: center;
+    padding: 9px 0;
+    border-radius: 20px;
+    color: white;
+    font-size: 12.5px;
+    background: var(--marvel-red);
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  a.watch-btn:hover { background: var(--marvel-red-bright); }
+
+  .upcoming a.watch-btn { background: #333; }
+  .upcoming a.watch-btn:hover { background: #444; }
+
+  .no-results {
+    text-align: center;
+    color: #666;
+    padding: 60px 0;
+    display: none;
+  }
+
+  footer { text-align: center; color: #555; font-size: 12px; padding: 60px 0 40px; }
+
+</style>
+</head>
+<body>
+
+  <header>
+    <p class="eyebrow">THE FULL SAGA</p>
+    <h1>MCU Timeline</h1>
+    <p class="subtitle">Every film across all six phases, in release order</p>
+    <hr class="divider">
+  </header>
+
+  <div class="controls">
+    <input id="search" type="text" placeholder="Search a film title...">
+    <div class="phase-filters" id="phaseFilters">
+      <button class="active" data-phase="all">All Phases</button>
+      <button data-phase="One">Phase 1</button>
+      <button data-phase="Two">Phase 2</button>
+      <button data-phase="Three">Phase 3</button>
+      <button data-phase="Four">Phase 4</button>
+      <button data-phase="Five">Phase 5</button>
+      <button data-phase="Six">Phase 6</button>
+    </div>
+  </div>
+
+  <div id="content"></div>
+  <p class="no-results" id="noResults">No films match your search.</p>
+
+  <footer>44 films &middot; Phase 1 through the multiverse saga and beyond</footer>
+
+<script>
+
+const films = [
+  { t:"Iron Man", y:2008, phase:"One", desc:"Tony Stark builds a suit of armor and becomes Iron Man.", rating:7.9 },
+  { t:"The Incredible Hulk", y:2008, phase:"One", desc:"Bruce Banner is hunted while searching for a cure.", rating:6.6 },
+  { t:"Iron Man 2", y:2010, phase:"One", desc:"Stark faces a rival and the toll of his own technology.", rating:7.0 },
+  { t:"Thor", y:2011, phase:"One", desc:"The Asgardian prince is exiled to Earth to learn humility.", rating:7.0 },
+  { t:"Captain America: The First Avenger", y:2011, phase:"One", desc:"Steve Rogers becomes a super-soldier in World War II.", rating:6.9 },
+  { t:"The Avengers", y:2012, phase:"One", desc:"Earth's mightiest heroes unite against Loki.", rating:8.0 },
+
+  { t:"Iron Man 3", y:2013, phase:"Two", desc:"Stark battles a terrorist threat after a personal attack.", rating:7.1 },
+  { t:"Thor: The Dark World", y:2013, phase:"Two", desc:"Thor fights to save the universe from an ancient enemy.", rating:6.7 },
+  { t:"Captain America: The Winter Soldier", y:2014, phase:"Two", desc:"Cap uncovers a conspiracy inside S.H.I.E.L.D.", rating:7.8 },
+  { t:"Guardians of the Galaxy", y:2014, phase:"Two", desc:"A band of misfits protects the galaxy.", rating:8.0 },
+  { t:"Avengers: Age of Ultron", y:2015, phase:"Two", desc:"The team faces a rogue AI bent on extinction.", rating:7.3 },
+  { t:"Ant-Man", y:2015, phase:"Two", desc:"A thief becomes a size-shifting hero to pull off a heist.", rating:7.0 },
+
+  { t:"Captain America: Civil War", y:2016, phase:"Three", desc:"Heroes split over government oversight.", rating:7.8 },
+  { t:"Doctor Strange", y:2016, phase:"Three", desc:"A surgeon learns the mystic arts after a car crash.", rating:7.5 },
+  { t:"Guardians of the Galaxy Vol. 2", y:2017, phase:"Three", desc:"The Guardians uncover Peter Quill's true parentage.", rating:7.6 },
+  { t:"Spider-Man: Homecoming", y:2017, phase:"Three", desc:"Peter Parker balances school and superheroics.", rating:7.4 },
+  { t:"Thor: Ragnarok", y:2017, phase:"Three", desc:"Thor must stop Ragnarok and save Asgard.", rating:7.9 },
+  { t:"Black Panther", y:2018, phase:"Three", desc:"T'Challa returns home to claim the throne of Wakanda.", rating:7.3 },
+  { t:"Avengers: Infinity War", y:2018, phase:"Three", desc:"Thanos hunts the Infinity Stones.", rating:8.4 },
+  { t:"Ant-Man and the Wasp", y:2018, phase:"Three", desc:"Scott Lang teams up to rescue someone from the Quantum Realm.", rating:7.0 },
+  { t:"Captain Marvel", y:2019, phase:"Three", desc:"Carol Danvers discovers her powers amid a galactic war.", rating:6.8 },
+  { t:"Avengers: Endgame", y:2019, phase:"Three", desc:"The remaining heroes assemble one last time.", rating:8.4 },
+  { t:"Spider-Man: Far From Home", y:2019, phase:"Three", desc:"Peter faces a new threat while on a school trip to Europe.", rating:7.4 },
+
+  { t:"Black Widow", y:2021, phase:"Four", desc:"Natasha Romanoff confronts her past as a spy.", rating:6.7 },
+  { t:"Shang-Chi and the Legend of the Ten Rings", y:2021, phase:"Four", desc:"Shang-Chi faces his father's secretive organization.", rating:7.4 },
+  { t:"Eternals", y:2021, phase:"Four", desc:"An ancient alien team reunites to face a new threat.", rating:6.3 },
+  { t:"Spider-Man: No Way Home", y:2021, phase:"Four", desc:"Peter's identity reveal breaks the multiverse.", rating:8.2 },
+  { t:"Doctor Strange in the Multiverse of Madness", y:2022, phase:"Four", desc:"Doctor Strange faces multiversal threats.", rating:6.9 },
+  { t:"Thor: Love and Thunder", y:2022, phase:"Four", desc:"Thor seeks inner peace but must face a god-hunter.", rating:6.2 },
+  { t:"Black Panther: Wakanda Forever", y:2022, phase:"Four", desc:"Wakanda fights to protect their nation after a loss.", rating:6.7 },
+
+  { t:"Ant-Man and the Wasp: Quantumania", y:2023, phase:"Five", desc:"The family is pulled into the Quantum Realm.", rating:6.1 },
+  { t:"Guardians of the Galaxy Vol. 3", y:2023, phase:"Five", desc:"The Guardians fight to save one of their own.", rating:7.9 },
+  { t:"The Marvels", y:2023, phase:"Five", desc:"Three heroes swap places and must team up.", rating:6.0 },
+  { t:"Deadpool & Wolverine", y:2024, phase:"Five", desc:"Deadpool teams up with Wolverine across the multiverse.", rating:7.7 },
+  { t:"Captain America: Brave New World", y:2025, phase:"Five", desc:"Sam Wilson steps up as the new Captain America.", rating:null },
+  { t:"Thunderbolts*", y:2025, phase:"Five", desc:"A team of antiheroes is thrown together on a dangerous mission.", rating:null },
+
+  { t:"The Fantastic Four: First Steps", y:2025, phase:"Six", desc:"Marvel's first family debuts in the MCU.", rating:null },
+  { t:"Spider-Man: Brand New Day", y:2026, phase:"Six", desc:"Peter Parker's next chapter, upcoming.", rating:null },
+  { t:"Avengers: Doomsday", y:2026, phase:"Six", desc:"The Avengers face their next great threat, upcoming.", rating:null },
+  { t:"Avengers: Secret Wars", y:2027, phase:"Six", desc:"The multiverse saga reaches its conclusion, upcoming.", rating:null },
+];
+
+const content = document.getElementById('content');
+const noResults = document.getElementById('noResults');
+const searchInput = document.getElementById('search');
+const phaseButtons = document.querySelectorAll('.phase-filters button');
+
+let activePhase = 'all';
+let query = '';
+
+function initial(title) {
+  return title.replace(/^(The|A|An)\s+/i, '').charAt(0).toUpperCase();
+}
+
+function render() {
+  content.innerHTML = '';
+  const phases = ['One','Two','Three','Four','Five','Six'];
+  let anyVisible = false;
+
+  phases.forEach(phase => {
+    if (activePhase !== 'all' && activePhase !== phase) return;
+
+    const phaseFilms = films.filter(f =>
+      f.phase === phase &&
+      f.t.toLowerCase().includes(query)
+    );
+    if (phaseFilms.length === 0) return;
+
+    anyVisible = true;
+
+    const section = document.createElement('div');
+    section.className = 'phase-section';
+
+    const heading = document.createElement('div');
+    heading.className = 'phase-heading';
+    heading.innerHTML = `<h2>Phase ${phase}</h2><div class="line"></div>`;
+    section.appendChild(heading);
+
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+
+    phaseFilms.forEach(f => {
+      const upcoming = f.rating === null;
+      const card = document.createElement('div');
+      card.className = 'card' + (upcoming ? ' upcoming' : '');
+
+      const query2 = encodeURIComponent(f.t + ' movie');
+      const link = `https://www.google.com/search?q=${query2}`;
+
+      card.innerHTML = `
+        <div>
+          <div class="poster">${initial(f.t)}</div>
+          <p class="title">${f.t}</p>
+          <p class="year">${f.y}</p>
+          <p class="desc">${f.desc}</p>
+        </div>
+        <div>
+          ${upcoming
+            ? `<span class="badge">Upcoming</span>`
+            : `<p class="rating">⭐ ${f.rating}</p>`}
+          <a class="watch-btn" href="${link}" target="_blank">${upcoming ? 'More Info' : 'Watch Now'}</a>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    section.appendChild(grid);
+    content.appendChild(section);
+  });
+
+  noResults.style.display = anyVisible ? 'none' : 'block';
+}
+
+phaseButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    phaseButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activePhase = btn.dataset.phase;
+    render();
+  });
+});
+
+searchInput.addEventListener('input', e => {
+  query = e.target.value.toLowerCase();
+  render();
+});
+
+render();
+
+</script>
+
+</body>
+</html>

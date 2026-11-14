@@ -1,0 +1,165 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(-45deg, #1d2671, #c33764, #5b247a, #1488cc);
+  background-size: 400% 400%;
+  animation: gradientmove 20s ease-in-out infinite;
+  color: white;
+
+}
+
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  display: inline-block;
+  text-decoration: none;
+  color: white;
+  border: 1px solid white;
+  padding: 10px 20px;
+  background-color: transparent;
+  transition: background-color 1.2s ease-in-out, color 1.2s ease-in-out, border-color 1.2s ease-in-out;
+}
+
+nav a span {
+  display: inline-block;
+  transition: transform 1.2s ease-in-out;
+}
+
+nav a:hover {
+  background-color: rgb(0, 255, 0);
+  color: black;
+  border-color: black;
+}
+
+nav a:hover span {
+  transform: scale(1.2) rotate(5deg);
+}
+
+
+.mainbox {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;   
+}
+
+h1 {
+  margin: 0;
+  padding: 0 20px;
+  text-align: center;
+  animation-name: colorchange;
+  animation-duration: 6s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+
+
+.cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 80px;
+  padding: 120px 20px 200px;
+}
+
+.slot {
+  width: 150px;
+  height: 150px;
+}
+
+.box {
+  width: 100%;
+  height: 100%;
+  background-color: #f3f3f3;
+  color: black;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: transform 2s cubic-bezier(0.075, 0.82, 0.165, 1), background-color 2s ease-in-out;
+}
+
+.slot:hover .box {
+  background-color: rgb(0, 255, 0);
+  transform: scale(1.8) rotate(360deg) translateY(40px);
+}
+
+
+.flip-section {
+  display: flex;
+  justify-content: center;
+  padding: 120px 20px 200px;
+}
+
+.flip {
+  width: 120px;
+  height: 120px;
+  background: pink;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation-name: flip-scale-up-hor;
+  animation-duration: 4s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@media (max-width: 300px) {
+  .cards {
+    display: none;
+  }
+}
+
+@keyframes colorchange {
+  0% {
+    color: white;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    color: pink;
+    transform: scale(1.1) rotate(1deg);
+  }
+  100% {
+    color: yellow;
+    transform: scale(1.2) rotate(-1deg);
+  }
+}
+
+@keyframes gradientmove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes flip-scale-up-hor {
+  0% {
+    transform: scale(1) rotateX(0);
+  }
+  50% {
+    transform: scale(2) rotateX(-90deg);
+  }
+  100% {
+    transform: scale(1) rotateX(-180deg);
+  }
+}
